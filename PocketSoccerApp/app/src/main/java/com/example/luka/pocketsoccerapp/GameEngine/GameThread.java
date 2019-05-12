@@ -1,6 +1,7 @@
 package com.example.luka.pocketsoccerapp.GameEngine;
 
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 public class GameThread extends  Thread {
@@ -18,10 +19,10 @@ public class GameThread extends  Thread {
     public void setRunning(){
         this.running = true;
     }
+    public void end(){this.running = false;}
 
     @Override
     public void run() {
-        long startTime = System.nanoTime();
         while(running){
 
             Canvas canvas = null;
@@ -38,21 +39,6 @@ public class GameThread extends  Thread {
                     this.surfaceHolder.unlockCanvasAndPost(canvas);
                 }
             }
-            long now = System.nanoTime() ;
-
-            long waitTime = (now - startTime)/1000000;
-            if(waitTime < 10)  {
-                waitTime= 10; // Millisecond.
-            }
-            System.out.print(" Wait Time="+ waitTime);
-
-            try {
-                this.sleep(waitTime);
-            } catch(InterruptedException e)  {
-
-            }
-            startTime = System.nanoTime();
-            System.out.print(".");
         }
     }
 }
